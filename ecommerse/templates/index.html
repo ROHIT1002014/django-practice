@@ -4,15 +4,11 @@
 </head>
 
 <body>
-<h1> rohit urmkdjflakfd lkdfj</h1>
+<h1> Home Page</h1>
+
+{% block content %}
+
+{% endblock content %}
+
 </body>
-<form
-        method="POST"
-        class="post-form"
-        action={% url "addProduct" %}
-        enctype="multipart/form-data"
->{% csrf_token %}
-        {{ form.as_p }}
-<button type="submit" class="save btn btn-default">Save</button>
-</form>
 </html>

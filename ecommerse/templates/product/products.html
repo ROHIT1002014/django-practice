@@ -1,0 +1,8 @@
+{% extends 'index.html' %}
+{% block content %}
+{% for data in products %}
+
+<p>{{ data.title }}</p>
+
+{% endfor %}
+{% endblock content %}

@@ -13,14 +13,17 @@ def homePage(request):
 def addProduct(request):
   if request.method == 'POST':
     form = CreateProduct(request.POST, request.FILES) # if we use file the request.FILE must be added
-    print(form.errors)
-    print(form.is_valid())
+    # print(form.errors)
+    # print(form.is_valid())
     if form.is_valid():
       print('form is valid')
       form.save()
-      return redirect('home')
+      return redirect('productList')
   else:
     print('invalid request')
     form = CreateProduct()
-    return TemplateResponse(request, 'index.html', {'form': form })
-  return TemplateResponse(request, 'index.html', {'form': form })
+    return TemplateResponse(request, 'product/addProduct.html', {'form': form })
+
+def allProducts(request):
+  products = Item.objects.all()
+  return TemplateResponse(request, 'product/products.html', {'products': products})
