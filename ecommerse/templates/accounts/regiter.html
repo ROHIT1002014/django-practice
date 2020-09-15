@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% block content %}
+<form
+ method="POST"
+ class="user-registration"
+ action={% url "registration" %}
+>{% csrf_token %}
+        {{ form.as_p }}
+        {% comment %} {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        <div id="form_errors">
+            {% for key, value in form.errors.items %}
+                <span class="fieldWrapper">
+                    {{ key }}:{{ value }}
+                </span>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %} {% endcomment %}
+<button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock content %}
