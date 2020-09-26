@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='container'>
+  <div class='row mx-auto justify-content-center'>
+    <div class='col'>
+      <h1>Are you sure you want to delete this.</h1>
+      <p>{{ blog_detail.title }}</p>
+
+      <form method = 'POST', action=''.>
+        <button class= 'btn btn-danger mb-4'>Yes, Deleted </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

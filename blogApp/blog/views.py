@@ -106,6 +106,7 @@ def blog_list_view(request):
   rendered_item = template_object.render(context)
   return HttpResponse(rendered_item)
 
+@staff_member_required
 def blog_update_view(request, slug):
   queryset = get_object_or_404(BlogPost, slug = slug)
   form = BlogPostModelForm(request.POST or None, instance=queryset)
@@ -124,8 +125,12 @@ def blog_retrieve_view(request, slug):
   template = './blogs/blogretrieved.html'
   return render(request, template, context)
 
+@staff_member_required
 def blog_delete_view(request, slug):
   queryset = get_object_or_404(BlogPost, slug = slug)
+  if request.method == 'POST':
+    queryset.delete()
+    redirect ('/')
   context = {'blog_detail': queryset}
   template = './blogs/blogDelete.html'
   return render(request, template, context)
