@@ -10,7 +10,7 @@ class BlogPostForm(forms.Form):
   # write validation of fields in the form
   def clean_title(self, *args, **kwargs):
     title = self.cleaned_data.get('title')
-    qs = BlogPost.objects.filter(title_iexact=title) # if this field is already contain unique key in models class then we don't need this field and _iexact is used for case sensitive of words
+    qs = BlogPost.objects.filter(title__iexact=title) # if this field is already contain unique key in models class then we don't need this field and _iexact is used for case sensitive of words
     print(qs.exists())
     if qs.exists():
       raise forms.ValidationError("This title is already exist. Please try again.")
@@ -22,11 +22,13 @@ class BlogPostModelForm(forms.ModelForm):
     model = BlogPost
     fields = ['title', 'slug', 'content']
 
-  # write validation of fields in the form
-  def clean_title(self, *args, **kwargs):
-    title = self.cleaned_data.get('title')
-    qs = BlogPost.objects.filter(title=title)
+  # commented below code bcs we have to make update form workable
 
-    if qs.exist():
-      raise forms.ValidationError("This title is already exist. Please try again.")
-    return title
+  # write validation of fields in the form
+  # def clean_title(self, *args, **kwargs):
+  #   title = self.cleaned_data.get('title')
+  #   qs = BlogPost.objects.filter(title=title)
+
+    # if qs.exists():
+    #   raise forms.ValidationError("This title is already exist. Please try again.")
+    # return title
