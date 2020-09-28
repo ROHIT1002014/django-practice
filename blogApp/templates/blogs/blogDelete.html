@@ -7,6 +7,7 @@
       <p>{{ blog_detail.title }}</p>
 
       <form method = 'POST', action=''.>
+        {% csrf_token %}
         <button class= 'btn btn-danger mb-4'>Yes, Deleted </button>
       </form>
     </div>

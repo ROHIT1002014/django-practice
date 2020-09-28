@@ -11,8 +11,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 def homePageView(request):
   title = 'Hello there ...'
-
-  context = {'title' : title, 'my_list': [1,2,3,4,5]}
+  blogs = BlogPost.objects.all()
+  context = {'blogs' : blogs}
   template = 'home.html'
   return render(request, template, context)
 
@@ -74,7 +74,6 @@ def blog_detail_view(request, slug):
   #   blog_detail = queryset.first()
   # else:
   #   raise Http404
-
   if queryset.count() == 0:
     raise Http404
   else:
@@ -91,7 +90,7 @@ def blog_detail_view(request, slug):
   # except ValueError:
   #   raise Http404
 
-  context = {'blog_detail' : blog_detail }
+  context = {'blog_detail' : blog_detail, 'request': request}  # here 'request': request is being pass to make request.user workable in template
   template = './blogs/blogDetail.html'
   template_object = get_template(template)
   rendered_item = template_object.render(context)
@@ -130,7 +129,7 @@ def blog_delete_view(request, slug):
   queryset = get_object_or_404(BlogPost, slug = slug)
   if request.method == 'POST':
     queryset.delete()
-    redirect ('/')
+    return redirect ('/')
   context = {'blog_detail': queryset}
   template = './blogs/blogDelete.html'
   return render(request, template, context)
