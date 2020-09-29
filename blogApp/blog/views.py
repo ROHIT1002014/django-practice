@@ -8,11 +8,13 @@ from .form import BlogPostForm, BlogPostModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
+from django.contrib import messages
+
 # Create your views here.
 def homePageView(request):
   title = 'Hello there ...'
-  blogs = BlogPost.objects.all()
-  context = {'blogs' : blogs}
+  blogs = BlogPost.objects.all()[:3] # added limit to to blog
+  context = {'blogs' : blogs, 'title': 'Welcome to You Blog'}
   template = 'home.html'
   return render(request, template, context)
 
@@ -89,8 +91,7 @@ def blog_detail_view(request, slug):
   #   raise Http404
   # except ValueError:
   #   raise Http404
-
-  context = {'blog_detail' : blog_detail, 'request': request}  # here 'request': request is being pass to make request.user workable in template
+  context = {'blog_detail' : blog_detail, 'request': request}  #context = {'blog_detail' : blog_detail, 'request': request} here in new 'request': request is being pass to make request.user workable in template
   template = './blogs/blogDetail.html'
   template_object = get_template(template)
   rendered_item = template_object.render(context)
@@ -108,15 +109,17 @@ def blog_list_view(request):
 @staff_member_required
 def blog_update_view(request, slug):
   queryset = get_object_or_404(BlogPost, slug = slug)
-  form = BlogPostModelForm(request.POST or None, instance=queryset)
+  form = BlogPostModelForm(request.POST or None, instance=queryset) # instace is use to pass current data into form
+  print(request.method)
+  if request.method == 'POST':
+    if form.is_valid():
+      form.save()
+      messages.success(request, 'Data has been updated.')
+      return redirect('/blog/')
 
-  if form.is_valid():
-    form.save()
-    return redirect('/')
-
-  context = {'form': form, 'title': 'Update blog'}
-  # template = './blogs/blogUpdate.html' #  rather than this  we can also use form.html
-  template = './blogs/form.html'
+  context = {'form': form, 'title': f'Update { queryset.title }', 'slug': queryset.slug}
+  template = './blogs/blogUpdate.html' #  rather than this  we can also use form.html
+  # template = './blogs/form.html'
   return render(request, template, context)
 
 def blog_retrieve_view(request, slug):

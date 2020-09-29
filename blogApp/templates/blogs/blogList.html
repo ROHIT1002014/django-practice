@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class='container'>
+<div class='container-fluid'>
   <div class='row mx-auto justify-content-center'>
-    <div class='col'>
-      <h1>this is blod list page</h1>
+    <div class='row'>
+      <h1>All blog list</h1>
+      <div class="card-group">
       {% for blog in blog_list %}
-      <h1>
-        {{ blog.title }}
+      {% include 'blogs/set-inline.html' with blog_post=blog truncate=True %} {% comment %} passing truncate variable to pass in set-linline.html {% endcomment %}
+      {% comment %} <h1>
+        <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
       </h1>
-      <h4>
+      <h5>
         {{ blog.content }}
-      </h4>
+      </h5> {% endcomment %}
       {% endfor %}
+      </div>
     </div>
   </div>
 </div>

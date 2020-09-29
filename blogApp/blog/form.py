@@ -25,10 +25,12 @@ class BlogPostModelForm(forms.ModelForm):
   # commented below code bcs we have to make update form workable
 
   # write validation of fields in the form
-  # def clean_title(self, *args, **kwargs):
-  #   title = self.cleaned_data.get('title')
-  #   qs = BlogPost.objects.filter(title=title)
-
-    # if qs.exists():
-    #   raise forms.ValidationError("This title is already exist. Please try again.")
-    # return title
+  def clean_title(self, *args, **kwargs):
+    instance = self.instance  # it is used bcs when form is created then instance doest container data
+    title = self.cleaned_data.get('title')
+    qs = BlogPost.objects.filter(title=title)
+    if instance is not None: # if intance is null then validatoin will work other wise dones not work.
+      qs = qs.exclude(pk = instance.pk)  # id = instance.id
+    if qs.exists():
+      raise forms.ValidationError("This title is already exist. Please try again.")
+    return title
