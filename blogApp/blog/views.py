@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from django.contrib import messages
+from django.utils import timezone
 
 # Create your views here.
 def homePageView(request):
@@ -98,7 +99,21 @@ def blog_detail_view(request, slug):
   return HttpResponse(rendered_item)
 
 def blog_list_view(request):
-  blog_list = BlogPost.objects.all()
+
+  # blog_list = BlogPost.objects.all()
+
+  # filtering as per timezone
+  # now = timezone.now()
+  # blog_list = BlogPost.objects.filter(publish_date__lte=now) # lte is less then equal to
+
+  # above code can be written as from models by manager (see in models.py file) and access here like given below
+  blog_list = BlogPost.objects.all().published()
+
+  # to fetch user published data with not repetation
+  if request.user.is_authenticated:
+    my_qs = BlogPost.objects.filter(user=request.user)
+    blog_list = (blog_list | my_qs).distinct()
+
   print(blog_list)
   context = {'blog_list' : blog_list }
   template = './blogs/blogList.html'

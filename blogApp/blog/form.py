@@ -20,7 +20,7 @@ class BlogPostForm(forms.Form):
 class BlogPostModelForm(forms.ModelForm):
   class Meta:
     model = BlogPost
-    fields = ['title', 'slug', 'content']
+    fields = ['title', 'slug', 'content', 'publish_date']
 
   # commented below code bcs we have to make update form workable
 
