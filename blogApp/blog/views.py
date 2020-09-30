@@ -45,18 +45,22 @@ def blog_create_view(request):
   #   obj.save()
   #   form = BlogPostModelForm()
 
-  form = BlogPostForm(request.POST or None )
-
+  form = BlogPostModelForm(request.POST or None, request.FILES or None )
   if form.is_valid():
+    obj = form.save(commit=False)
+    obj.user = request.user  # assigning the current user
+    obj.save()
+    form = BlogPostModelForm()
+
     # print(form.cleaned_data)
     # title = form.cleaned_data['title']
     # obj = BlogPost.objects.create(title=title) #this is used for adding only selected field into model
 
-    obj = BlogPost.objects.create(**form.cleaned_data) # by this all element's data are being come
+    # obj = BlogPost.objects.create(**form.cleaned_data) # by this all element's data are being come
     # print(obj.user) it will print admin which is default so we have to assign current user
-    obj.user = request.user  # assigning the current user
-    form = BlogPostForm()
-    obj.save()
+    # obj.user = request.user  # assigning the current user
+    # form = BlogPostForm()
+    # obj.save()
 
   template = './blogs/form.html'
   context = {'form' : form, 'title' : title }
@@ -124,8 +128,8 @@ def blog_list_view(request):
 @staff_member_required
 def blog_update_view(request, slug):
   queryset = get_object_or_404(BlogPost, slug = slug)
-  form = BlogPostModelForm(request.POST or None, instance=queryset) # instace is use to pass current data into form
-  print(request.method)
+  form = BlogPostModelForm(request.POST or None, request.FILES or None, instance=queryset) # instace is use to pass current data into form
+  # print(request.method)
   if request.method == 'POST':
     if form.is_valid():
       form.save()

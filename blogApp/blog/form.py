@@ -4,6 +4,7 @@ from .models import BlogPost
 # it was normal form
 class BlogPostForm(forms.Form):
   title = forms.CharField()
+  image=forms.ImageField()
   slug = forms.SlugField()
   content = forms.CharField(widget=forms.Textarea)
 
@@ -20,7 +21,7 @@ class BlogPostForm(forms.Form):
 class BlogPostModelForm(forms.ModelForm):
   class Meta:
     model = BlogPost
-    fields = ['title', 'slug', 'content', 'publish_date']
+    fields = ['title','image', 'slug', 'content', 'publish_date']
 
   # commented below code bcs we have to make update form workable
 

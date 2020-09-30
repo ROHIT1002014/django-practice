@@ -1,0 +1,30 @@
+{% comment %} <div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ blog.title }}</h5>
+    <p class="card-text">{{ blog.content }}</p>
+  </div>
+</div> {% endcomment %}
+
+{% comment %} the above code will work when object is not pass with different or more data with 'with' statement in inclue statement in parent template{% endcomment %}
+<div class="col-12 col-md-10">
+  <div class="card m-2 {% if not blog.publish_date %} border border-success text-dark {% endif %}">
+    <div class="card-body">
+    {% if blog.image %}
+      <img src="{{ blog.image.url }}" class="card-imag-top" height="500" width="600" />
+    {% endif %}
+      <h5 class="card-title">{{ blog.title }}</h5>
+      <small class="text-muted">{{ blog.publish_date }}</small>
+      {% if truncate %}
+      <p class="card-text">{{ blog.content | linebreaks | truncatewords:10 }}</p>
+      {% else %}
+      <p class="card-text">{{ blog.content | linebreaks }}</p>
+      {% endif %}
+      {% if detail %}
+      {% if not blog.publish_date %}
+        Draft
+      {% endif %}
+      <a href="{{ blog.get_absolute_url }}">View</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
