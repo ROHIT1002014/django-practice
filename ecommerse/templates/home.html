@@ -1,15 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block content %}
 <div class='container'>
   <div class='row mx-auto justify-content-center'>
     <div class='col'>
       <h1>{{ title }}</h1>
-      {% for blog in blogs  %}
-          {% comment %} <a href="blog-detail/{{blog.slug}}">{{ blog.slug }}</a> {% endcomment %}
-          {% comment %} <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a> {% endcomment %}
+      {% include 'product/products.html' with products_list=product_list %}
+      {% comment %} {% for blog in blogs  %}
+          <a href="blog-detail/{{blog.slug}}">{{ blog.slug }}</a>
+          <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
 
           {% include 'blogs/set-inline.html' with blog_post=blog truncate=True detail=True %}
-      {% endfor %}
+      {% endfor %} {% endcomment %}
       {% comment %} <h1>{{ request.user }}</h1>
       {{ request.path }}
       <h1>{{ user }}</h1>
