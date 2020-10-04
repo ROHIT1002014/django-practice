@@ -1,8 +1,24 @@
 {% extends 'index.html' %}
 {% block content %}
-{% for data in products %}
-
-<p>{{ data.title }}</p>
-
-{% endfor %}
+<div class="product-list my-5">
+  <div class="container">
+    <div class="row justify-content-start">
+      {% for product in products %}
+      <div class="col-md-3 col-sm-6 my-2">
+        <div class="card h-100">
+        <div class="embed-responsive embed-responsive-4by3">
+          <img class="card-img-top embed-responsive-item" src="{{ product.image.url }}" alt="Card image cap">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p class="card-text"><span class="font-weight-bold text-info">Description: </span>{{ product.description }}</p>
+            <p class="badge p-3 badge-success mr-5">{{ product.price }}</p>
+            <p><a href="{{ product.get_absolute_url }}" >More info . . .</a></p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </diV>
+  </div>
+</div>
 {% endblock content %}

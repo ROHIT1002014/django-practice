@@ -1,9 +1,17 @@
 {% extends 'index.html' %}
 {% block content %}
+<div class="row justify-content-center">
+        <div class="col-6 align-self-center">
+                <a href="{% url 'logout' %}" class="btn btn-danger">
+                        Logout
+                </a>
+        </div>
+</div>
+
 <form
  method="POST"
  class="post-form"
- action={% url "addProduct" %}
+ action={% url "add_product" %}
  enctype="multipart/form-data"
 >{% csrf_token %}
         {{ form.as_p }}
