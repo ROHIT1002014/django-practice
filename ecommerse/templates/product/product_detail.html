@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="product-detail">
+  <div class="container my-5">
+    <div class="row justify-content-between">
+      <div class="col-md-4 col-sm-12  my-2">
+        <img class="rounded img-fluid"  src="{{ product.image.url }}" alt="Card image cap">
+      </div>
+      <div class="col-md-6 col-sm-12 my-2">
+        <h2>{{ product.title }}</h2>
+        <p>
+          <span class="badge p-2 font-weight-light badge-info">Product No.</span>
+          <span class="monospaced">1960140180</span>
+        </p>
+        <p><span class="font-weight-bold text-info mr-3">Description: </span>{{ product.description }}</p>
+        <p><span class="font-weight-bold text-info mr-3">Price: </span><span class="badge text-monospace p-2 badge-success">${{ product.price }}</span></p>
+        <p><span class="font-weight-bold text-info mr-3">Discount: </span>{{ product.discount_price }}</p>
+        <p><span class="font-weight-bold text-info mr-3">Category: </span>{{ product.category }}</p>
+        <div class="row">
+          <div class="col-lg-6 pb-2">
+            <a href="#" class="btn btn-danger w-100">Add To Cart</a>
+          </div>
+          <div class="col-lg-6">
+            <a href="#" class="btn btn-success w-100">Shop Now</a>
+          </div>
+        </div>
+        <p class="text-secondary"><span class="font-weight-bold text-info mr-3">Seller: </span>xyz</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
