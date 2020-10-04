@@ -39,7 +39,7 @@ class BlogPostManager(models.Manager):
 
 class BlogPost(models.Model): # blogpost_set -> queryset  i.e. it will give object to perform query like fetching data, updating data etc for current user
   user = models.ForeignKey(User, default=1, null= True, on_delete=models.SET_NULL) # i.e. when user is deleted then this class will exist
-  image = models.ImageField(upload_to= settings.MEDIA_ROOT, blank=True, null=True)
+  image = models.ImageField(upload_to= 'media/', blank=True, null=True)
   title = models.TextField()
   content = models.TextField(blank=True, null=True)
   slug = models.SlugField(unique=True) # hello rohit -> hello-rohit

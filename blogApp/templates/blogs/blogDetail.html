@@ -9,10 +9,10 @@
     {% if request.user.is_authenticated %}
       {% if request.user.is_staff %}
       <div class='col-12'>
-        <a href="{{ blog_detail.get_edit_url }}">
+        <a href="{{ blog_detail.get_edit_url }}" class="btn btn-success">
           + Edit
         </a>
-        <a href="{{ blog_detail.get_delete_url }}">
+        <a href="{{ blog_detail.get_delete_url }}" class="ml-3 btn btn-success">
           + Delete
         </a>
       </div>
